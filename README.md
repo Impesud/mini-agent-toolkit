@@ -27,7 +27,7 @@ a partire da un prompt testuale, un modello OpenAI (configurato nel codice) deci
 1) Clona/copìa il progetto ed entra nella cartella:
 
 ```bash
-cd mini_agent_toolkit
+cd mini-agent-toolkit
 ```
 
 2) (Consigliato) Crea e attiva un virtual environment:
