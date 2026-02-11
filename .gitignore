@@ -1,0 +1,15 @@
+# Ambiente virtuale
+venv/
+.env
+
+# Cache di Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test e Log
+.pytest_cache/
+agent_activity.log
+
+# Cartelle di sistema
+.DS_Store
