@@ -5,9 +5,11 @@ from .registry import ToolRegistry
 from .logger import log_action
 
 class MiniAgent:
-    def __init__(self, registry: ToolRegistry):
+    def __init__(self, registry: ToolRegistry, model: str = "gpt-4o-mini"):
         self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
         self.registry = registry
+        self.model = model
+
 
     def run(self, prompt: str):
         system_prompt = f"""
@@ -23,7 +25,7 @@ class MiniAgent:
         """
 
         response = self.client.chat.completions.create(
-            model="gpt-4o-mini",
+            model=self.model,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": prompt}
@@ -38,10 +40,16 @@ class MiniAgent:
 
         # Se l'LLM ha scelto un tool valido
         if tool_name and self.registry.get_tool(tool_name):
-            func = self.registry.get_tool(tool_name)["func"]
-            result = func(**params)
-            log_action(tool_name, prompt, result)
-            return f"[TOOL {tool_name}] {result}"
+            try:
+                func = self.registry.get_tool(tool_name)["func"]
+                result = func(**params)
+                log_action(tool_name, prompt, result)
+                return f"[TOOL {tool_name}] {result}"
+            except Exception as e:
+                error_msg = f"Error executing tool {tool_name}: {str(e)}"
+                log_action(tool_name, prompt, error_msg)
+                return f"[ERROR] {error_msg}"
+
         
         # Fallback: Risposta diretta dell'LLM
         return direct_answer
