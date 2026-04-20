@@ -2,7 +2,8 @@ import os
 from dotenv import load_dotenv
 from app.registry import ToolRegistry
 from app.agent import MiniAgent
-from app.tools import get_weather, calculate_discount, count_words, get_current_time
+from app.tools import get_weather, calculate_discount, count_words, get_current_time, get_system_info
+
 
 # 1. Caricamento variabili d'ambiente (.env)
 load_dotenv()
@@ -16,14 +17,17 @@ def main():
     registry.register("calculate_discount", calculate_discount, "Calcola il prezzo scontato (params: price, discount)")
     registry.register("count_words", count_words, "Conta tutte le parole presenti dopo il comando (param: text)")
     registry.register("get_current_time", get_current_time, "Ritorna l'ora attuale (param: timezone)")
+    registry.register("get_system_info", get_system_info, "Ritorna info sul sistema (No params)")
+
 
     # 3. Controllo presenza API Key
     if not os.getenv("OPENAI_API_KEY"):
         print("❌ ERRORE: Chiave OPENAI_API_KEY non trovata nel file .env")
         return
 
-    # 4. Inizializzazione dell'AI Agent
+    # 4. Inizializzazione dell'AI Agent (Configurabile)
     agent = MiniAgent(registry)
+
 
     # 5. Casi di test per la demo (Golden Set)
     test_prompts = [

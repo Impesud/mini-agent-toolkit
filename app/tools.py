@@ -45,3 +45,10 @@ def get_current_time(timezone: str = "UTC") -> str:
     """
     now = datetime.datetime.now()
     return f"L'orario attuale ({timezone}) è {now.strftime('%H:%M:%S')}."
+
+def get_system_info() -> str:
+    """
+    Ritorna informazioni di base sul sistema operativo.
+    """
+    import platform
+    return f"Sistema: {platform.system()} {platform.release()}, Python: {platform.python_version()}"
