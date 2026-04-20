@@ -26,7 +26,7 @@ def main():
         return
 
     # 4. Inizializzazione dell'AI Agent (Configurabile)
-    agent = MiniAgent(registry, model="gpt-4o-mini")
+    agent = MiniAgent(registry)
 
 
     # 5. Casi di test per la demo (Golden Set)
