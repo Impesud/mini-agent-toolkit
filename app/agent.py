@@ -11,7 +11,7 @@ class MiniAgent:
         self.model = model
 
 
-    def run(self, prompt: str):
+    def run(self, prompt: str) -> str:
         system_prompt = f"""
         Sei un assistente intelligente. Hai accesso a questi tool:
         {self.registry.list_tools()}
